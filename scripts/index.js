@@ -7,3 +7,28 @@ function getComputerChoice() {
     const choices = ["rock", "paper", "scissors"];
     return choices[getRandomInt(choices.length)];
 }
+
+function getPlayerChoice() {
+    let message = "rock, paper or scissors?";
+    let choice = prompt(message);
+
+    if (choice === null) {
+        return "";
+    }
+    else {
+        choice = choice.trim().toLowerCase();
+
+        while (choice !== "rock" && choice !== "paper" && choice !== "scissors") {
+            choice = prompt(message);
+
+            if (choice === null) {
+                return "";
+            }
+            else {
+                choice = choice.trim().toLowerCase();
+            }
+        }
+    }
+
+    return choice;
+}
