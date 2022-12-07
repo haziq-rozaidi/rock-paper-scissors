@@ -71,3 +71,19 @@ function playRound(playerSelection, computerSelection) {
 
     return result;
 }
+
+function getGameResult(playerScore, computerScore) {
+    let result;
+
+    if (playerScore > computerScore) {
+        result = "Player is the winner!";
+    }
+    else if (playerScore < computerScore) {
+        result = "Computer is the winner!";
+    }
+    else {
+        result = "It's a draw!"
+    }
+
+    return result;
+}
