@@ -110,3 +110,38 @@ function calcScore(results) {
 
     return scores;
 }
+
+function game() {
+    let playerSelection, computerSelection, roundResult, scores, playerScore, computerScore;
+    let results = [];
+
+    for (let i = 0; i < 5; i++) {
+        playerSelection = getPlayerChoice();
+        computerSelection = getComputerChoice();
+        roundResult = playRound(playerSelection, computerSelection);
+
+        console.log("Player: " + playerSelection);
+        console.log("Computer: " + computerSelection);
+
+        if (roundResult === "") {
+            console.log("\nGame cancelled.")
+            return;
+        }
+        else {            
+            results.push(roundResult);
+
+            console.log(roundResult);
+            console.log("\n");
+        }
+    }
+    
+    scores = calcScore(results);
+    playerScore = scores[0];
+    computerScore = scores[1];
+
+    console.log("Player score: " + playerScore);
+    console.log("Computer score: " + computerScore);
+    console.log(getGameResult(playerScore, computerScore));
+}
+
+game();
