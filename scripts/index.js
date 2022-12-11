@@ -87,3 +87,26 @@ function getGameResult(playerScore, computerScore) {
 
     return result;
 }
+
+function calcScore(results) {
+    let playerScore = 0;
+    let computerScore = 0;
+    let scores;
+
+    for (let i = 0; i < results.length; i++) {
+        if (results[i].includes("win")) {
+            playerScore += 1;
+        }
+        else if (results[i].includes("lose")) {
+            computerScore += 1;
+        }
+        else {
+            playerScore += 0;
+            computerScore += 0;
+        }
+    }
+
+    scores = [playerScore, computerScore];
+
+    return scores;
+}
