@@ -31,3 +31,31 @@
 .heading_align_center {
     text-align: center;
 }
+
+.page__scores {
+    margin: 0 0 1.5rem;
+}
+
+.scores {
+    display: flex;
+    justify-content: center;
+}
+
+.scores__player {
+    width: 10rem;
+    height: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.scores__choice {
+    font-size: 5rem;
+}
+
+.scores__score {
+    color: #eceeef;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
