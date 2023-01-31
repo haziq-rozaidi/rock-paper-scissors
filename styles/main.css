@@ -1,0 +1,33 @@
+.page {
+    min-height: 100vh;
+    font-family: Roboto, sans-serif;
+    background-color: #374047;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.heading {
+    color: #f9f9fa;
+}
+
+.heading_level_1 {
+    font-size: 3.125rem;
+    margin: 0 0 2.125rem;
+}
+
+.heading_level_2 {
+    color: #eceeef;
+    font-size: 2.5rem;
+    margin: 0 0 1rem;
+}
+
+.heading_level_3 {
+    color: #eceeef;
+    font-size: 1.75rem;
+    margin: 0 0 1.125rem;
+}
+
+.heading_align_center {
+    text-align: center;
+}
