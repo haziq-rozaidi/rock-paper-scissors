@@ -8,31 +8,6 @@ function getComputerChoice() {
     return choices[getRandomInt(choices.length)];
 }
 
-function getPlayerChoice() {
-    let message = "rock, paper or scissors?";
-    let choice = prompt(message);
-
-    if (choice === null) {
-        return "";
-    }
-    else {
-        choice = choice.trim().toLowerCase();
-
-        while (choice !== "rock" && choice !== "paper" && choice !== "scissors") {
-            choice = prompt(message);
-
-            if (choice === null) {
-                return "";
-            }
-            else {
-                choice = choice.trim().toLowerCase();
-            }
-        }
-    }
-
-    return choice;
-}
-
 function capitaliseFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -42,106 +17,73 @@ function playRound(playerSelection, computerSelection) {
     const losingMessage = "You lose!";
     const tieMessage = "It's a tie!";
     const rules = ["rock breaks scissors", "paper covers rock", "scissors cuts paper"];
-    let result;
+    let result = "";
 
-    if (playerSelection === computerSelection) {
-        result = tieMessage;
-    }
-    else if (playerSelection === "rock" && computerSelection === "paper") {
-        result = losingMessage + " " + capitaliseFirstLetter(rules[1]) + ".";
+    if (playerSelection === "rock" && computerSelection === "paper") {
+        result = losingMessage + " " + capitaliseFirstLetter(rules[1]);
     }
     else if (playerSelection === "rock" && computerSelection === "scissors") {
-        result = winningMessage + " " + capitaliseFirstLetter(rules[0]) + ".";
+        result = winningMessage + " " + capitaliseFirstLetter(rules[0]);
     }
     else if (playerSelection === "paper" && computerSelection === "rock") {
-        result = winningMessage + " " + capitaliseFirstLetter(rules[1]) + ".";
+        result = winningMessage + " " + capitaliseFirstLetter(rules[1]);
     }
     else if (playerSelection === "paper" && computerSelection === "scissors") {
-        result = losingMessage + " " + capitaliseFirstLetter(rules[2]) + ".";
+        result = losingMessage + " " + capitaliseFirstLetter(rules[2]);
     }
     else if (playerSelection === "scissors" && computerSelection === "rock") {
-        result = losingMessage + " " + capitaliseFirstLetter(rules[0]) + ".";
+        result = losingMessage + " " + capitaliseFirstLetter(rules[0]);
     }
     else if (playerSelection === "scissors" && computerSelection === "paper") {
-        result = winningMessage + " " + capitaliseFirstLetter(rules[2]) + ".";
+        result = winningMessage + " " + capitaliseFirstLetter(rules[2]);
     }
     else {
-        result = "";
+        result = tieMessage;
     }
 
     return result;
 }
 
 function getGameResult(playerScore, computerScore) {
-    let result;
-
-    if (playerScore > computerScore) {
-        result = "Player is the winner!";
-    }
-    else if (playerScore < computerScore) {
-        result = "Computer is the winner!";
-    }
-    else {
-        result = "It's a draw!"
-    }
-
-    return result;
+    return playerScore > computerScore ? "Player is the winner" : "Computer is the winner";
 }
 
-function calcScore(results) {
-    let playerScore = 0;
-    let computerScore = 0;
-    let scores;
-
-    for (let i = 0; i < results.length; i++) {
-        if (results[i].includes("win")) {
-            playerScore += 1;
-        }
-        else if (results[i].includes("lose")) {
-            computerScore += 1;
-        }
-        else {
-            playerScore += 0;
-            computerScore += 0;
-        }
-    }
-
-    scores = [playerScore, computerScore];
-
-    return scores;
+function getChoiceEmoji(choice) {
+    return choice === "rock" ? "✊"
+        : choice === "paper" ? "✋"
+        : "✌️";
 }
 
-function game() {
-    let playerSelection, computerSelection, roundResult, scores, playerScore, computerScore;
-    let results = [];
+const roundNumberHeading = document.querySelector(".heading_level_2");
+const roundResultHeading = document.querySelector(".heading_level_3");
+const buttons = document.querySelector(".buttons");
+const playerChoiceContainer = document.querySelector(".scores__player:nth-child(1) .scores__choice");
+const computerChoiceContainer = document.querySelector(".scores__player:nth-child(2) .scores__choice");
+const playerScoreContainer = document.querySelector(".scores__player:nth-child(1) .scores__score > span");
+const computerScoreContainer = document.querySelector(".scores__player:nth-child(2) .scores__score > span");
 
-    for (let i = 0; i < 5; i++) {
-        playerSelection = getPlayerChoice();
-        computerSelection = getComputerChoice();
-        roundResult = playRound(playerSelection, computerSelection);
+let roundNumber = 0;
 
-        console.log("Player: " + playerSelection);
-        console.log("Computer: " + computerSelection);
-
-        if (roundResult === "") {
-            console.log("\nGame cancelled.")
-            return;
-        }
-        else {            
-            results.push(roundResult);
-
-            console.log(roundResult);
-            console.log("\n");
-        }
+buttons.addEventListener("click", (e) => {
+    if (e.target.tagName !== "BUTTON") return;
+    if (Number(playerScoreContainer.textContent) === 5 || Number(computerScoreContainer.textContent) === 5) {
+        return;
     }
-    
-    scores = calcScore(results);
-    playerScore = scores[0];
-    computerScore = scores[1];
 
-    console.log("Player score: " + playerScore);
-    console.log("Computer score: " + computerScore);
-    console.log(getGameResult(playerScore, computerScore));
-}
+    const playerSelection = e.target.dataset.choice;
+    const computerSelection = getComputerChoice();
+    const roundResult = playRound(playerSelection, computerSelection);
+    roundNumber += 1;
 
-game();
+    roundNumberHeading.textContent = "Round " + roundNumber;
+    playerChoiceContainer.textContent = getChoiceEmoji(playerSelection);
+    computerChoiceContainer.textContent = getChoiceEmoji(computerSelection);
+    roundResultHeading.textContent = roundResult;
+
+    if (roundResult.includes("win")) {
+        playerScoreContainer.textContent = Number(playerScoreContainer.textContent) + 1;
+    }
+    else if (roundResult.includes("lose")) {
+        computerScoreContainer.textContent = Number(computerScoreContainer.textContent) + 1;
+    }
+});
