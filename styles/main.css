@@ -52,6 +52,7 @@
 
 .scores__choice {
     font-size: 5rem;
+    margin: 0 0 0.75rem;
 }
 
 .scores__score {
@@ -66,12 +67,34 @@
     column-gap: 2rem;
 }
 
+.button {
+    padding: 0;
+    border: none;
+}
+
+.button_play {
+    width: 13rem;
+    height: 3.5rem;
+    border-style: solid;
+    border-radius: 0.5rem;
+    border-width: 0.2rem;
+    border-color: #f9f9fa;
+    color: #f9f9fa;
+    background-color: #374047;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.button_play:hover {
+    color: #374047;
+    background-color: #f9f9fa;
+    cursor: pointer;
+}
+
 .buttons__button {
     width: 10rem;
     height: 10rem;
-    padding: 0;
     font-size: 5rem;
-    border: none;
     border-radius: 1rem;
     background-color: #606e79;
 }
@@ -79,4 +102,37 @@
 .buttons__button:hover {
     cursor: pointer;
     background-color: #7f8b93;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.modal_active {
+    display: block;
+}
+
+.modal__dialog {
+    width: 22.5rem;
+    height: 13rem;
+    margin: 13.5rem auto 0;
+    background-color: #374047;
+    border-radius: 1rem;
+    padding: 2.5rem;
+    box-sizing: border-box;
+}
+
+.modal__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
 }
