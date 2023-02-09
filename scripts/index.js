@@ -54,19 +54,27 @@ function getChoiceEmoji(choice) {
         : "✌️";
 }
 
-const roundNumberHeading = document.querySelector(".heading_level_2");
-const roundResultHeading = document.querySelector(".heading_level_3");
+const roundNumberHeading = document.querySelector("main .heading_level_2");
+const roundResultHeading = document.querySelector("main .heading_level_3");
 const buttons = document.querySelector(".buttons");
+const playButton = document.querySelector(".button_play");
 const playerChoiceContainer = document.querySelector(".scores__player:nth-child(1) .scores__choice");
 const computerChoiceContainer = document.querySelector(".scores__player:nth-child(2) .scores__choice");
 const playerScoreContainer = document.querySelector(".scores__player:nth-child(1) .scores__score > span");
 const computerScoreContainer = document.querySelector(".scores__player:nth-child(2) .scores__score > span");
+const modal = document.querySelector(".modal");
+const modalHeading = document.querySelector(".modal__content > .heading_level_2");
 
 let roundNumber = 0;
 
 buttons.addEventListener("click", (e) => {
     if (e.target.tagName !== "BUTTON") return;
-    if (Number(playerScoreContainer.textContent) === 5 || Number(computerScoreContainer.textContent) === 5) {
+
+    let playerScore = Number(playerScoreContainer.textContent);
+    let computerScore = Number(computerScoreContainer.textContent);
+
+    if (playerScore === 5 || computerScore === 5) {
+        modal.classList.add("modal_active");
         return;
     }
 
@@ -81,9 +89,34 @@ buttons.addEventListener("click", (e) => {
     roundResultHeading.textContent = roundResult;
 
     if (roundResult.includes("win")) {
-        playerScoreContainer.textContent = Number(playerScoreContainer.textContent) + 1;
+        playerScore += 1;
+        playerScoreContainer.textContent = playerScore;
+        if (playerScore === 5) {
+            modalHeading.textContent = "You won!";
+            modal.classList.add("modal_active");
+        }
     }
     else if (roundResult.includes("lose")) {
-        computerScoreContainer.textContent = Number(computerScoreContainer.textContent) + 1;
+        computerScore += 1;
+        computerScoreContainer.textContent = computerScore;
+        if (computerScore === 5) {
+            modalHeading.textContent = "You lost!";
+            modal.classList.add("modal_active");
+        }
     }
+});
+
+modal.addEventListener("click", (e) => {
+    if (e.target === modal) modal.classList.remove("modal_active");
+});
+
+playButton.addEventListener("click", (e) => {
+    roundNumber = 0;
+    roundNumberHeading.textContent = "Make a choice";
+    roundResultHeading.textContent = "First to reach 5 points wins the game";
+    playerChoiceContainer.textContent = "❔";
+    computerChoiceContainer.textContent = "❔";
+    playerScoreContainer.textContent = "0";
+    computerScoreContainer.textContent = "0";
+    modal.classList.remove("modal_active");
 });
